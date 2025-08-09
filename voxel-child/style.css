@@ -1,0 +1,149 @@
+/*
+Theme Name:   Voxel (child theme)
+Theme URI:    https://getvoxel.io/
+Author:       27collective
+Author URI:   https://27collective.net/
+Template:     voxel
+Version:      1.0
+Text Domain:  voxel-child
+*/
+
+.cart-item-pricing {
+    margin-top: 10px;
+}
+
+.cart-item-subtotal span:last-child {
+    margin-left: 42px;
+    font-weight: 600;
+}
+
+.pricing-details {
+    display: flex;
+    flex-direction: column;
+    gap: 8px; /* Adjust spacing between rows */
+    width: fit-content;
+}
+
+.pricing-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    font-size: 14px;
+    color: #666;
+    padding: 2px 0; /* Adds spacing for cleaner look */
+}
+
+.label {
+    flex-grow: 1;
+    text-align: left;
+}
+
+.price {
+    font-weight: bold;
+    text-align: right;
+    min-width: 50px; /* Ensures spacing between text and price */
+}
+
+.ts-form-group {
+		
+		    flex-direction: column;
+		
+		    position: relative;
+		
+		    --required-col: rgb(231 18 81);
+		
+		    --optional-col: var(--ts-shade-3);
+		
+		    min-width: 0;
+		
+		    padding: 20px !important;
+		
+	border: 1px solid #e9e6ed !important;}
+		
+		   
+		
+		.ts-form-group:not(.ui-heading-field) label {
+		
+		    font-size: 14px;
+		
+		    font-weight: 500;
+		
+		    color: #afbcc2;
+		}
+		
+		
+		.elementor-3059 .elementor-element.elementor-element-3d493634 .ts-form input.ts-filter {
+		
+		    color: var(--e-global-color-primary);
+		
+		    background:  #fdfdfde0;
+		
+		    border-radius:  5px;
+		}
+		
+		.ts-form div.ts-filter {
+		
+		    background:  #FFFFFF;
+		
+		    border-radius: 5px
+		
+		    border-color: #f0f0f1;
+		}
+
+.elementor-3059 .elementor-element.elementor-element-3d493634 div.ts-filter.ts-filled svg {
+    fill: #001bf8;
+}
+
+.ts-btn-1.form-btn {
+    background-color: var(--e-global-color-31d8c32);
+    border-radius: 5px;
+Border: none;
+}
+		 
+.ts-btn-2.form-btn {
+    border-radius: 5px;
+    color: #FFFFFF;
+    background: var(--e-global-color-accent);
+}
+
+.ts-form .ts-form-group .ts-filter, .ts-form .ts-form-group input, .ts-form .ts-form-group textarea {
+    border: 1px solid #e9e6ed;
+    border-radius: .375rem;
+    background: #fff;
+}
+
+.elementor-3059 .elementor-element.elementor-element-3d493634 .ts-form textarea.ts-filter {
+    color: var(--e-global-color-primary);
+    background: #f6f7f752;
+    border-radius: 5px;
+}
+
+.ts-form-group switcher-label{
+    padding: 0px !important;
+    border: 0px solid #e9e6ed !important;
+}
+
+.ts-stepper-left ts-icon-btn{
+    border: none !important;
+    width: 40% !important;
+}
+
+.ts-stepper-right ts-icon-btn{
+    border: none !important;
+    width: 40% !important;
+}
+
+.elementor-3059 .elementor-element.elementor-element-3d493634 .ts-field-repeater {
+    border-style: solid;
+    border-width: 1px 1px 1px 1px;
+    border-color: #e9e6ed;
+    border-radius: 05px;
+}
+
+.ts-repeater-head label {
+    font-size: var(--e-global-typography-text-font-size);
+    display: flex;
+    align-items: center;
+    color: var(--ts-shade-1) !important;
+}
