@@ -140,14 +140,16 @@
               // Calculate the original membership-allowed rates
               let applyMembershipDetails = {
                 ...productDetails,
-                adult_quantity: Math.min(
-                  adult_quantity,
-                  membership_adult_quantity,
-                ),
-                child_quantity: Math.min(
-                  child_quantity,
-                  membership_child_quantity,
-                ),
+                adult_quantity: adult_quantity,
+                child_quantity: child_quantity,
+                // adult_quantity: Math.min(
+                //   adult_quantity,
+                //   membership_adult_quantity,
+                // ),
+                // child_quantity: Math.min(
+                //   child_quantity,
+                //   membership_child_quantity,
+                // ),
               };
 
               let memberRates = calculateMemberRates(
@@ -160,15 +162,16 @@
               extraMemberDetails.adult_quantity = extra_adults;
               extraMemberDetails.child_quantity = extra_children;
 
-              let nonMemberRates = calculateNonMemberRates(extraMemberDetails);
+              // let nonMemberRates = calculateNonMemberRates(extraMemberDetails); // not needed
 
               // Merge both rates by adding corresponding values
               console.log('memberRates Rates:', memberRates);
-              console.log('nonMemberRates Rates:', nonMemberRates);
+              // console.log('nonMemberRates Rates:', nonMemberRates);
               let finalRates = {};
               Object.keys(memberRates).forEach((key) => {
                 finalRates[key] =
-                  (memberRates[key] || 0) + (nonMemberRates[key] || 0);
+                  // (memberRates[key] || 0) + (nonMemberRates[key] || 0);
+                  (memberRates[key] || 0);
               });
 
               console.log('Final Combined Rates:', finalRates);
@@ -259,6 +262,8 @@
       } = productDetails;
 
       // Convert values to numbers (to prevent string issues)
+
+      console.log('memberrates', productDetails);
       membership_level = parseFloat(membership_level);
       adult_price = parseFloat(adult_price);
       child_price = parseFloat(child_price);
@@ -271,75 +276,118 @@
       membership_child_quantity = parseInt(membership_child_quantity);
 
       // Convert commission_discount to percentage
-      commission_percentage = commission_discount / 100;
+      let commission_percentage = commission_discount / 100;
 
       if (adult_quantity > 0) {
-        // Calculate Vendor Profit (same as Net Rate)
-        let vendorProfitAdult = net_rate_adult;
-        let ourCommissionAdult = adult_price - vendorProfitAdult;
+        // // Calculate Vendor Profit (same as Net Rate)
+        // let vendorProfitAdult = net_rate_adult;
+        // let ourCommissionAdult = adult_price - vendorProfitAdult;
 
-        // Calculate everything_costa_rica_rates (Applying 25% Reduction in Commission)
-        let finalCommissionAdult =
-          ourCommissionAdult - ourCommissionAdult * commission_percentage;
+        // // Calculate everything_costa_rica_rates (Applying 25% Reduction in Commission)
+        // let finalCommissionAdult =
+        //   ourCommissionAdult - ourCommissionAdult * commission_percentage;
 
-        everythingCostaRicaAdultRate = net_rate_adult + finalCommissionAdult;
-        // Total cost for all adults
-        totalAdultCost = everythingCostaRicaAdultRate * adult_quantity;
+        // everythingCostaRicaAdultRate = net_rate_adult + finalCommissionAdult;
+        // // Total cost for all adults
+        // totalAdultCost = everythingCostaRicaAdultRate * adult_quantity;
+        // 1. Calculate Costa Rica Adult Rate and it's commission
+        let costaRicaAdultRate =
+          adult_price - adult_price * commission_percentage;
+        let costaRichaAdultCommission = adult_price - costaRicaAdultRate;
+
+        // 2. Calculate extra adult quantity
+        let extraAdult =
+          membership_adult_quantity > adult_quantity
+            ? 0
+            : adult_quantity - membership_adult_quantity;
+
+        // 3. Calculate total adult cost
+        var totalAdultCost = adult_quantity * costaRicaAdultRate;
+        var totalExtraAdultCommission =
+          extraAdult * costaRichaAdultCommission ?? 0;
+
+        // 4. Calculate everything costa rica adult rate
+        everythingCostaRicaAdultRate = totalAdultCost;
       }
 
       if (child_quantity > 0) {
-        console.log('Calculated child Rates:', child_quantity);
-        // Calculate Vendor Profit (same as Net Rate)
-        let vendorProfitChild = net_rate_child;
-        let ourCommissionChild = child_price - vendorProfitChild;
+        // console.log('Calculated child Rates:', child_quantity);
+        // // Calculate Vendor Profit (same as Net Rate)
+        // let vendorProfitChild = net_rate_child;
+        // let ourCommissionChild = child_price - vendorProfitChild;
 
-        // Calculate everything_costa_rica_rates (Applying 25% Reduction in Commission)
-        let finalCommissionChild =
-          ourCommissionChild - ourCommissionChild * commission_percentage;
+        // // Calculate everything_costa_rica_rates (Applying 25% Reduction in Commission)
+        // let finalCommissionChild =
+        //   ourCommissionChild - ourCommissionChild * commission_percentage;
 
-        everythingCostaRicaChildRate = net_rate_child + finalCommissionChild;
-        // Total cost for all adults
-        totalChildCost = everythingCostaRicaChildRate * child_quantity;
+        // everythingCostaRicaChildRate = net_rate_child + finalCommissionChild;
+        // // Total cost for all adults
+        // totalChildCost = everythingCostaRicaChildRate * child_quantity;
+
+        // 1. Calculate Costa Rica Child Rate and it's commission
+        let costaRicaChildRate =
+          child_price - child_price * commission_percentage;
+        let costaRichaChildCommission = child_price - costaRicaChildRate;
+
+        // 2. Calculate extra child quantity
+        let extraChild =
+          membership_child_quantity > child_quantity
+            ? 0
+            : child_quantity - membership_child_quantity;
+
+        // 3. Calculate total child cost
+        var totalChildCost = child_quantity * costaRicaChildRate;
+        var totalExtraChildCommission =
+          extraChild * costaRichaChildCommission ?? 0;
+        // 4. Calculate everything costa rica child rate
+        everythingCostaRicaChildRate = totalChildCost;
       }
 
       // Calculate deposit_amount (Applying Membership Discount to Only Membership Quantities)
-      let depositAmount =
-        (everythingCostaRicaAdultRate - net_rate_adult) * adult_quantity -
-        (everythingCostaRicaAdultRate - net_rate_adult) *
-          membership_adult_quantity *
-          membership_level +
-        (everythingCostaRicaChildRate - net_rate_child) * child_quantity -
-        (everythingCostaRicaChildRate - net_rate_child) *
-          membership_child_quantity *
-          membership_level;
+      // let depositAmount =
+      //   (everythingCostaRicaAdultRate - net_rate_adult) * adult_quantity -
+      //   (everythingCostaRicaAdultRate - net_rate_adult) *
+      //     membership_adult_quantity *
+      //     membership_level +
+      //   (everythingCostaRicaChildRate - net_rate_child) * child_quantity -
+      //   (everythingCostaRicaChildRate - net_rate_child) *
+      //     membership_child_quantity *
+      //     membership_level;
+
+      // deposit amount is our commission on extra adult and child
+      let depositAmount = totalExtraAdultCommission + totalExtraChildCommission;
 
       // Ensure deposit_amount is never negative
-      if (child_quantity === 0) {
-        depositAmount = Math.max(
-          0,
-          (everythingCostaRicaAdultRate - net_rate_adult) * adult_quantity -
-            (everythingCostaRicaAdultRate - net_rate_adult) *
-              membership_adult_quantity *
-              membership_level,
-        );
-      } else {
-        depositAmount = Math.max(0, depositAmount);
-      }
+      // if (child_quantity === 0) {
+      //   depositAmount = Math.max(
+      //     0,
+      //     (everythingCostaRicaAdultRate - net_rate_adult) * adult_quantity -
+      //       (everythingCostaRicaAdultRate - net_rate_adult) *
+      //         membership_adult_quantity *
+      //         membership_level,
+      //   );
+      // } else {
+      //   depositAmount = Math.max(0, depositAmount);
+      // }
+
+      // savedAmount =
+      //   (everythingCostaRicaAdultRate - net_rate_adult) * adult_quantity +
+      //   (everythingCostaRicaChildRate - net_rate_child) * child_quantity;
 
       savedAmount =
-        (everythingCostaRicaAdultRate - net_rate_adult) * adult_quantity +
-        (everythingCostaRicaChildRate - net_rate_child) * child_quantity;
+        adult_price * adult_quantity +
+        child_price * child_quantity -
+        (totalAdultCost + totalChildCost);
 
       // Calculate Due on Arrival Amount (Same as Before)
-      let dueOnArrival =
-        net_rate_adult * adult_quantity + net_rate_child * child_quantity;
+      let dueOnArrival = totalAdultCost + totalChildCost;
       let totalCostaRicaRate = totalAdultCost + totalChildCost;
 
       let rates = {
         everything_costa_rica_adult_rate: everythingCostaRicaAdultRate,
         everything_costa_rica_child_rate: everythingCostaRicaChildRate,
         totalCostaRicaRate: totalCostaRicaRate,
-        deposit_amount: depositAmount,
+        deposit_amount: depositAmount ?? 0,
         due_on_arrival: dueOnArrival,
         saved_amount: savedAmount,
       };
@@ -376,7 +424,7 @@
       child_quantity = parseInt(child_quantity);
 
       // Convert commission_discount to percentage
-      commission_percentage = commission_discount / 100;
+      let commission_percentage = commission_discount / 100;
 
       if (adult_quantity > 0) {
         let vendorProfitAdult = net_rate_adult;
@@ -468,7 +516,9 @@
       $('.ts-item-price.due-arrival').text(
         '$' + rates['due_on_arrival'].toFixed(2),
       );
-
+      $('.ts-item-price.deposit-amount').text(
+        '$' + rates['due_on_arrival'].toFixed(2),
+      );
       console.log('Updated Pricing UI with:', rates);
     }
 

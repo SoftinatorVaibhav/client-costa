@@ -43,6 +43,16 @@ if ( ! defined('ABSPATH') ) {
 						<input name="membership_plan[children]" type="number" min="0" value="0" required>
 					</div>
 
+					<div class="ts-form-group x-col-12">
+						<label>Number of Students</label>
+						<input name="membership_plan[students]" type="number" min="0" value="0" required>
+					</div>
+
+					<div class="ts-form-group x-col-12">
+						<label>Number of Seniors</label>
+						<input name="membership_plan[seniors]" type="number" min="0" value="0" required>
+					</div>
+
 
 					<div class="ts-form-group x-col-12">
 						<input type="hidden" name="action" value="voxel_create_membership_plan">

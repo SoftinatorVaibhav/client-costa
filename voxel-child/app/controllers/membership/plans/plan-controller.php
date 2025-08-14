@@ -47,6 +47,8 @@ class Plan_Controller extends \Voxel\Controllers\Base_Controller {
 		$commission_discount = isset($_POST['membership_plan']['commission_discount']) ? intval($_POST['membership_plan']['commission_discount']) : 0;
 		$adults = isset($_POST['membership_plan']['adults']) ? intval($_POST['membership_plan']['adults']) : 0;
 		$children = isset($_POST['membership_plan']['children']) ? intval($_POST['membership_plan']['children']) : 0;
+		$students = isset($_POST['membership_plan']['students']) ? intval($_POST['membership_plan']['students']) : 0;
+		$seniors = isset($_POST['membership_plan']['seniors']) ? intval($_POST['membership_plan']['seniors']) : 0;
 	
 		try {
 			$plan = \Voxel\Plan::create([
@@ -55,7 +57,9 @@ class Plan_Controller extends \Voxel\Controllers\Base_Controller {
 				'description' 			=> $description,
 				'commission_discount' 	=> $commission_discount,  // Store commission_discount
 				'adults'      			=> $adults,  // Store adults
-				'children'    			=> $children // Store children
+				'children'    			=> $children, // Store children
+				'students'    			=> $students, // Store students
+				'seniors'    			=> $seniors // Store seniors
 			]);
 	
 			email_debug_data(['create_plan---' => $_POST]); // Debugging log
@@ -106,6 +110,8 @@ class Plan_Controller extends \Voxel\Controllers\Base_Controller {
 				'commission_discount'  	=> isset($data['commission_discount']) ? intval($data['commission_discount']) : 0,
 				'adults'      			=> isset($data['adults']) ? intval($data['adults']) : 0,
 				'children'    			=> isset($data['children']) ? intval($data['children']) : 0,
+				'students'    			=> isset($data['students']) ? intval($data['students']) : 0,
+				'seniors'    			=> isset($data['seniors']) ? intval($data['seniors']) : 0,
 			]);
 	
 			return wp_send_json([

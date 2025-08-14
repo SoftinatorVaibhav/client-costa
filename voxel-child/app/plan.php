@@ -132,7 +132,9 @@ class Plan {
 			'settings' => $data['settings'],
 			'commission_discount'=>$data['commission_discount'],// Ensure it's an integer
 			'adults' => intval($data['adults']), // Ensure it's an integer
-        	'children' => intval($data['children']) // Ensure it's an integer
+        	'children' => intval($data['children']), // Ensure it's an integer
+			'students' => intval($data['students']), // Ensure it's an integer
+			'seniors' => intval($data['seniors']) // Ensure it's an integer
 		];
 
 		\Voxel\set( 'plans', $plans );
@@ -159,6 +161,8 @@ class Plan {
 		$this->commission_discount = isset($data['commission_discount']) ? intval($data['commission_discount']) : 0;  // Added
 		$this->adults = isset($data['adults']) ? intval($data['adults']) : 0;  // Added
 		$this->children = isset($data['children']) ? intval($data['children']) : 0; // Added
+		$this->students = isset($data['students']) ? intval($data['students']) : 0; // Added
+		$this->seniors = isset($data['seniors']) ? intval($data['seniors']) : 0; // Added
 	}
 
 	public function get_key() {
@@ -197,6 +201,8 @@ class Plan {
 		$this->commission_discount = isset($data['commission_discount']) ? intval($data['commission_discount']) : 0;
 		$this->adults = isset($data['adults']) ? intval($data['adults']) : 0;
 		$this->children = isset($data['children']) ? intval($data['children']) : 0;
+		$this->students = isset($data['students']) ? intval($data['students']) : 0; // Added
+		$this->seniors = isset($data['seniors']) ? intval($data['seniors']) : 0; // Added
 	}
 	
 
@@ -340,7 +346,9 @@ class Plan {
 			// Ensure `adults` and `children` are stored properly
 			'commission_discount' => $this->commission_discount ?? 0,
 			'adults' => $this->adults ?? 0,
-			'children' => $this->children ?? 0
+			'children' => $this->children ?? 0,
+			'students' => $this->students ?? 0,
+			'seniors' => $this->seniors ?? 0
 		];
 	}
 	
@@ -423,6 +431,8 @@ class Plan {
 		$config['commission_discount'] = $this->commission_discount ?? 0;
 		$config['adults'] = $this->adults ?? 0;
 		$config['children'] = $this->children ?? 0;
+		$config['students'] = $this->students ?? 0;
+		$config['seniors'] = $this->seniors ?? 0;
 
 		return $config;
 	}

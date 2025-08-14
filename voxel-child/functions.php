@@ -62,11 +62,13 @@ function enqueue_my_custom_script() {
 
     if (isset($meta_values['product'][0])) {       
         $product_data = json_decode($meta_values['product'][0], true);
-        
+        email_debug_datav($product_data);
         // Extract prices
         $adult_price            = isset($product_data['addons']['adult_total_price']['price']) ? $product_data['addons']['adult_total_price']['price'] : null;
         $child_price            = isset($product_data['addons']['child_total_price']['price']) ? $product_data['addons']['child_total_price']['price'] : null;
         $commission_discount    = isset($meta_values['commission_discount'][0]) ? $meta_values['commission_discount'][0] : 25;
+        $student_price          = isset($product_data['addons']['total_student_rate']['price']) ? $product_data['addons']['student_total_price']['price'] : null;
+        $senior_price           = isset($product_data['addons']['total_senior_rate']['price']) ? $product_data['addons']['senior_total_price']['price'] : null;
         $net_rate_adult         = isset($meta_values['net_rate_adult'][0]) ? $meta_values['net_rate_adult'][0] : null;
         $net_rate_child         = isset($meta_values['net_rate_child'][0]) ? $meta_values['net_rate_child'][0] : null;
         
@@ -75,9 +77,12 @@ function enqueue_my_custom_script() {
             'post_id'                   => $post_id,
             'adult_price'               => $adult_price,
             'child_price'               => $child_price,
+            'student_price'             => $student_price,
+            'senior_price'              => $senior_price,
             'commission_discount'       => $commission_discount,
             'net_rate_adult'            => $net_rate_adult,
-            'net_rate_child'            => $net_rate_child,          
+            'net_rate_child'            => $net_rate_child,
+            // 'full_time_student'         => $product_data
         ];
 
     }
@@ -91,6 +96,8 @@ function enqueue_my_custom_script() {
             $productDetails['membership_level'] = $traveller_num;
             $productDetails['membership_adult_quantity'] = isset($membership->plan->adults) ? $membership->plan->adults : 0;
             $productDetails['membership_child_quantity'] = isset($membership->plan->children) ? $membership->plan->children : 0;
+            $productDetails['membership_student_quantity'] = isset($membership->plan->students) ? $membership->plan->students : 0;
+            $productDetails['membership_senior_quantity'] = isset($membership->plan->seniors) ? $membership->plan->seniors : 0;
         }
         
     }
@@ -384,6 +391,8 @@ function calculateNonMemberRates($productDetails) {
     $net_rate_child = floatval($productDetails['net_rate_child'] ?? 0);
     $adult_quantity = intval($productDetails['adult_quantity'] ?? 0);
     $child_quantity = intval($productDetails['child_quantity'] ?? 0);
+    $student_quantity = intval($productDetails['student_quantity'] ?? 0);
+    $senior_quantity = intval($productDetails['senior_quantity'] ?? 0);
 
     // Convert commission_discount to percentage
     $commission_percentage = $commission_discount / 100;
@@ -501,7 +510,7 @@ function email_debug_data($data) {
 }
 
 function email_debug_datav($data) {
-    //wp_mail('vaibhav.softinator@gmail.com', 'Debug Information', print_r($data, true));
+    // wp_mail('vaibhav.softinator@gmail.com', 'Debug Information', print_r($data, true));
 }
 
 add_filter( 'voxel/roles/vendor/is_safe_for_registration', '__return_true' );

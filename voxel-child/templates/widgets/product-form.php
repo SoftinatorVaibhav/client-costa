@@ -84,6 +84,14 @@ if ( ! defined('ABSPATH') ) {
                                 <p>{{ currencyFormat( 0 ) }}</p>
                             </div>
                         </li>
+                        <li class="ts-total" style="margin: 5px 0px;padding-top: 10px;">
+                            <div class="ts-item-name">
+                                <p><?= _x( 'Deposit amount', 'product form', 'voxel' ) ?></p>
+                            </div>
+                            <div class="ts-item-price deposit-amount">
+                                <p>{{ currencyFormat( 0 ) }}</p>
+                            </div>
+                        </li>
                         <li class="sin-discount">
                             <div class="item-name">
                                 <div style="display: flex;align-items: center;">

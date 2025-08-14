@@ -64,6 +64,20 @@ if ( ! defined('ABSPATH') ) {
 						'classes' => 'x-col-6',
 						'min' => 0, // Ensures no negative numbers
 					] ) ?>
+					<!-- New Input Field for Number of Students -->
+					<?php \Voxel\Form_Models\Number_Model::render( [
+						'v-model' => 'plan.students',
+						'label' => 'Number of Students',
+						'classes' => 'x-col-6',
+						'min' => 0, // Ensures no negative numbers
+					] ) ?>
+					<!-- New Input Field for Number of Seniors -->
+					<?php \Voxel\Form_Models\Number_Model::render( [
+						'v-model' => 'plan.seniors',
+						'label' => 'Number of Seniors',
+						'classes' => 'x-col-6',
+						'min' => 0, // Ensures no negative numbers
+					] ) ?>
 				</div>
 			</div>
 			<div v-show="plan.key !== 'default'" class="x-row">
